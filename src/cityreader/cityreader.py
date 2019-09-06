@@ -78,12 +78,47 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+
+
+# user_lat1 = float(input("Enter lat1: "))
+# user_lon1 = float(input("Enter lon1: "))
+# user_lat2 = float(input("Enter lat2: "))
+# user_lon2 = float(input("Enter lon2: "))
+
+import math
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  copy_array = []
+
+  lat_array = []
+  lon_array = []
+
+  for c in cities:
+    copy_array.append([c.name, c.lat, c.lon])
+
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
-  return within
+
+  for b in range(32, 46):
+    for city in copy_array:
+      for c in city:
+        if type(c) == float:
+            if math.floor(c) == b:
+              lat_array.append(city)
+
+  
+  for b in range(-100, -120, -1):
+    for city in lat_array:
+      for c in city:
+        if type(c) == float:
+          if math.floor(c) == b:
+              lon_array.append(city)
+
+  return lon_array
+
+print(cityreader_stretch(45, -100, 32, -120, cities))
