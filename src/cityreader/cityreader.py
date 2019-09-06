@@ -14,12 +14,30 @@
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+
+import csv
+
+class City:
+    def __init__(self, name, lat, lon):
+        self.name = name
+        self.lat = lat
+        self.lon = lon
+
+    def __str__(self):
+        return f"{self.name}, {self.lat}, {self.lon}"
+
 cities = []
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
+
+  with open('c:\\Users\\Lidii\\Desktop\\LAMBDA\\CS\\Week 01\\Sprint-Challenge--Intro-Python\\src\\cityreader\\cities.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+      city = City(row['city'], float(row['lat']), float(row['lng']))
+      cities.append(city)
     
     return cities
 
@@ -60,12 +78,47 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+
+
+# user_lat1 = float(input("Enter lat1: "))
+# user_lon1 = float(input("Enter lon1: "))
+# user_lat2 = float(input("Enter lat2: "))
+# user_lon2 = float(input("Enter lon2: "))
+
+import math
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
+  copy_array = []
+
+  lat_array = []
+  lon_array = []
+
+  for c in cities:
+    copy_array.append([c.name, c.lat, c.lon])
+
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
-  return within
+
+  for b in range(32, 46):
+    for city in copy_array:
+      for c in city:
+        if type(c) == float:
+            if math.floor(c) == b:
+              lat_array.append(city)
+
+  
+  for b in range(-100, -120, -1):
+    for city in lat_array:
+      for c in city:
+        if type(c) == float:
+          if math.floor(c) == b:
+              lon_array.append(city)
+
+  return lon_array
+
+print(cityreader_stretch(45, -100, 32, -120, cities))
